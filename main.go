@@ -21,7 +21,7 @@ type Options struct {
 func main() {
 	o := &Options{}
 
-	configurator.New().ReadFromFile("app.json", &o)
+	configurator.New().ReadFromFile("./env/app.json", &o)
 	fmt.Println(o.DigitalOcean.ClientID)
 	api := oauthApi.NewApi(digitalocean.DigitalOcean(o.DigitalOcean.ClientID, o.DigitalOcean.ClientSecret, o.DigitalOcean.RedirectURL))
 	client := squad.Client()
