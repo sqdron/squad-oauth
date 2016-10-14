@@ -5,8 +5,6 @@ import (
 	"github.com/sqdron/squad-oauth/oauthApi"
 	"github.com/sqdron/squad-digitalocean/digitalocean"
 	"github.com/sqdron/squad/configurator"
-	"fmt"
-	"io/ioutil"
 )
 
 type AuthOptions struct {
@@ -21,13 +19,7 @@ type Options struct {
 
 func main() {
 	o := &Options{}
-	fmt.Println("Debug files...")
-	files, _ := ioutil.ReadDir("./env")
-	for _, f := range files {
-		fmt.Println(f.Name())
-	}
 	configurator.New().ReadFromFile("./env/providers.json", &o)
-	fmt.Println(o.DigitalOcean.ClientID)
 	api := oauthApi.NewApi(digitalocean.DigitalOcean(o.DigitalOcean.ClientID, o.DigitalOcean.ClientSecret, o.DigitalOcean.RedirectURL))
 	client := squad.Client()
 	client.Api.Route("oauth_open").Action(api.OpenSession)
