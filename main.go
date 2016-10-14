@@ -22,7 +22,7 @@ type Options struct {
 func main() {
 	o := &Options{}
 	fmt.Println("Debug files...")
-	files, _ := ioutil.ReadDir("./env")
+	files, _ := ioutil.ReadDir("./")
 	for _, f := range files {
 		fmt.Println(f.Name())
 	}
