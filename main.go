@@ -22,7 +22,7 @@ func main() {
 	configurator.New().ReadFromFile("./env/providers.json", &o)
 	api := oauthApi.NewApi(digitalocean.DigitalOcean(o.DigitalOcean.ClientID, o.DigitalOcean.ClientSecret, o.DigitalOcean.RedirectURL))
 	client := squad.Client()
-	client.Api.Route("oauth_open").Action(api.OpenSession)
+	client.Api.Route("oauth_open").Action(api.GetAccessUrl)
 	client.Api.Route("oauth_authorize").Action(api.Authorize)
 	client.Api.Route("oauth_refresh").Action(api.Refresh)
 	client.Activate()

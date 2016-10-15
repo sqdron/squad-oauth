@@ -11,7 +11,7 @@ type Provider struct {
 
 type IProvider interface {
 	Name() string
-	OpenSession(state string) (*Session, error)
+	GetAccessUrl(state string) (string, error)
 	Authorize(*Session, string) (string, error)
 	GetAccount(*Session) (*Account, error)
 	RefreshToken(refreshToken string) (*oauth2.Token, error)
@@ -22,8 +22,8 @@ func (p *Provider) Name() string {
 	return p.realization.(IProvider).Name();
 }
 
-func (p *Provider) OpenSession(state string) (*Session, error) {
-	return p.realization.(IProvider).OpenSession(state);
+func (p *Provider) GetAccessUrl(state string) (string, error) {
+	return p.realization.(IProvider).GetAccessUrl(state);
 }
 
 func (p *Provider) Authorize(session *Session, code string) (string, error) {

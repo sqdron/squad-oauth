@@ -32,21 +32,20 @@ type RequestRefresh struct {
 }
 
 type IAuthApi interface {
-	OpenSession(r RequestSession) *oauth.Session
+	GetAccessUrl(r RequestSession) (string, error)
 	Authorize(RequestAuthorize) (string, error)
 	Refresh(r RequestRefresh) *oauth2.Token
 }
 
-func (a *oauthApi) OpenSession(r RequestSession) *oauth.Session {
+func (a *oauthApi) GetAccessUrl(r RequestSession) (string, error) {
 	fmt.Println(r)
 	fmt.Println(r.Provider)
 	p := a.providers[r.Provider]
 	if (p == nil) {
-		return nil
+		return "", errors.New("Unknown OAuth provider " + r.Provider )
 	}
 	fmt.Println(p)
-	s, _ := p.OpenSession(util.GenerateString(10))
-	return s
+	return p.GetAccessUrl(util.GenerateString(10))
 }
 
 func (a *oauthApi) Authorize(r RequestAuthorize) (string, error) {
